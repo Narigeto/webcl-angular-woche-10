@@ -49,14 +49,12 @@ export class RoundEyeComponent implements AfterViewInit {
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(evt: MouseEvent): void {
-    console.log(evt)
     this.leftListener && this.leftListener(evt);
     this.rightListener && this.rightListener(evt);
   }
 
   ngAfterViewInit(): void {
     const parent = (<HTMLElement>this.elementRef.nativeElement);
-
     parent.innerHTML = this.eyeView('leftEye') + this.eyeView('rightEye');
 
     const v = 14; // versatz - Abstand des Pupillenzentrums vom Augenzentrum in SVG units
