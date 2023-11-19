@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { NodeEventHandler } from 'rxjs/internal/observable/fromEvent';
+import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-round-eye',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './round-eye.component.html',
+  template: '',
   styleUrl: './round-eye.component.css'
 })
 export class RoundEyeComponent implements AfterViewInit {
