@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-round-eye',
   standalone: true,
   imports: [CommonModule],
-  template: '',
-  styleUrl: './round-eye.component.css'
+  templateUrl: './round-eye.component.html',
+  styleUrl: './round-eye.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class RoundEyeComponent implements AfterViewInit {
+  private thisElement: HTMLElement;
+
   private leftListener: ((evt: MouseEvent) => void) | undefined;
   private rightListener: ((evt: MouseEvent) => void) | undefined;
 
@@ -45,7 +48,9 @@ export class RoundEyeComponent implements AfterViewInit {
   </svg>
   `;
 
-  constructor(private elementRef: ElementRef){}
+  constructor(private elementRef: ElementRef){
+    this.thisElement = elementRef.nativeElement;
+  }
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(evt: MouseEvent): void {
@@ -54,8 +59,7 @@ export class RoundEyeComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const parent = (<HTMLElement>this.elementRef.nativeElement);
-    parent.innerHTML = this.eyeView('leftEye') + this.eyeView('rightEye');
+    this.thisElement.innerHTML = this.eyeView('leftEye') + this.eyeView('rightEye');
 
     const v = 14; // versatz - Abstand des Pupillenzentrums vom Augenzentrum in SVG units
 
@@ -64,10 +68,11 @@ export class RoundEyeComponent implements AfterViewInit {
   }
 
   eyeBinding(eyeId: string): (evt: MouseEvent) => void {
-    const rect = document.querySelectorAll(eyeId + "_iris ellipse")[0].getBoundingClientRect();
-    const iris = <HTMLElement>document.querySelector(eyeId + "_iris");
-    const closeLidLayer = <HTMLElement>document.querySelector(eyeId + "_closeLid");
-    const eye = <HTMLElement>document.querySelector(eyeId);
+    const thisElement = this.elementRef.nativeElement;
+    const rect = thisElement.querySelectorAll(eyeId + "_iris ellipse")[0].getBoundingClientRect();
+    const iris = thisElement.querySelector(eyeId + "_iris") as HTMLElement;
+    const closeLidLayer = thisElement.querySelector(eyeId + "_closeLid") as HTMLElement;
+    const eye = thisElement.querySelector(eyeId) as HTMLElement;
 
     closeLidLayer.style.opacity = '0';
 

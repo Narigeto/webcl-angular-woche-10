@@ -1,0 +1,17 @@
+
+app-round-eye {
+    display: inline-block;
+    position: relative;
+}
+
+app-round-eye svg {
+    width: 100px;
+    height: 80px;
+}
+app-round-eye #leftEye {
+    left: 0;
+}
+
+app-round-eye #rightEye {
+    left: 150px;
+}
